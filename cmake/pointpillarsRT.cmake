@@ -13,10 +13,10 @@ endif()
 set(CUDA_TOOLKIT_ROOT_DIR /usr/local/cuda)
 set(CUDA_INCLUDE_DIRS ${CUDA_TOOLKIT_ROOT_DIR}/${CUDA_INSTALL_TARGET_DIR}/include)
 
-set(CMAKE_BUILD_TYPE "Release")
-set(CMAKE_CXX_FLAGS_RELEASE "-Wno-deprecated-declarations -O2")
-add_compile_options(-W)
-add_compile_options(-std=c++11)
+# set(CMAKE_BUILD_TYPE "Release")
+# set(CMAKE_CXX_FLAGS_RELEASE "-Wno-deprecated-declarations -O2")
+# add_compile_options(-W)
+# add_compile_options(-std=c++11)
 
 set( SMS 30 32 35 37 50 52 53 60 61 62 70 72 75 87)
 foreach(sm ${SMS})
@@ -51,16 +51,16 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}/models/pointpillarsRT
 )
 
-link_directories(
-	${TENSORRT_LIBRARY_DIRS}
-	/usr/lib/aarch64-linux-gnu
-  /usr/aarch64-linux-gnu/lib/
-)
+# link_directories(
+# 	${TENSORRT_LIBRARY_DIRS}
+# 	/usr/lib/aarch64-linux-gnu
+#   /usr/aarch64-linux-gnu/lib/
+# )
 
-file(GLOB_RECURSE SOURCE_FILES
-${PROJECT_SOURCE_DIR}/src/${PROJECT_NAME}/models/src/*.cu
-${PROJECT_SOURCE_DIR}/src/${PROJECT_NAME}/models/src/*.cpp
-)
+# file(GLOB_RECURSE SOURCE_FILES
+# ${PROJECT_SOURCE_DIR}/src/${PROJECT_NAME}/models/src/*.cu
+# ${PROJECT_SOURCE_DIR}/src/${PROJECT_NAME}/models/src/*.cpp
+# )
 
 # cuda_add_executable(${PROJECT_NAME} main.cpp ${SOURCE_FILES})
 

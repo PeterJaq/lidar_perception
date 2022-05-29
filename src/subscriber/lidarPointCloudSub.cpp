@@ -3,14 +3,14 @@
 #include "glog/logging.h"
 
 namespace lidar_perception{
-CloudSubscriber::CloudSubscriber(ros::NodeHandle& nh, std::string topic_name, size_t buff_size)
+LidarPointCloudSubscriber::LidarPointCloudSubscriber(ros::NodeHandle& nh, std::string topic_name, size_t buff_size)
     :nh_(nh) {
-    subscriber_ = nh_.subscribe(topic_name, buff_size, &CloudSubscriber::msg_callback, this);
+    subscriber_ = nh_.subscribe(topic_name, buff_size, &LidarPointCloudSubscriber::msg_callback, this);
 }
 
-void CloudSubscriber::msg_callback(const sensor_msgs::PointCloud2::ConstPtr& cloud_msg_ptr) {
+void LidarPointCloudSubscriber::msg_callback(const sensor_msgs::PointCloud2::ConstPtr& cloud_msg_ptr) {
     buff_mutex_.lock();
-
+    ROS_ERROR("Run Pointcloud msg cbk!");
     // convert ROS PointCloud2 to pcl::PointCloud<pcl::PointXYZ>:
     CloudData cloud_data;
     cloud_data.time = cloud_msg_ptr->header.stamp.toSec();
@@ -21,7 +21,7 @@ void CloudSubscriber::msg_callback(const sensor_msgs::PointCloud2::ConstPtr& clo
     buff_mutex_.unlock();
 }
 
-void CloudSubscriber::ParseData(std::deque<CloudData>& cloud_data_buff) {
+void LidarPointCloudSubscriber::ParseData(std::deque<CloudData>& cloud_data_buff) {
     buff_mutex_.lock();
 
     // pipe all available measurements to output buffer:

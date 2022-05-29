@@ -1,5 +1,7 @@
 #include <ros/ros.h>
 #include "glog/logging.h"
+#include "lidar_perception/global_defination/global_defination.h"
+#include "lidar_perception/detector/lidarDetectionFlow.hpp"
 
 using namespace lidar_perception;
 
@@ -11,14 +13,15 @@ int main(int argc, char *argv[]) {
     ros::init(argc, argv, "lidar_detection_node");
     ros::NodeHandle nh;
 
-    std::string cloud_topic;
-    nh.param<std::string>("cloud_topic", cloud_topic, "/synced_cloud");
-
+    // std::string cloud_topic;
+    // nh.param<std::string>("cloud_topic", cloud_topic, "/synced_cloud");
+    // nh.param<std::string>("vis_obstacles_topic", vis_obstacles_topic, "/vis/obstacles");
+    // nh.param<std::string>("performance_topic", performance_topic, "/performance/info/pointpillars");
     // subscribe to
     // a. raw fusioned pointcloud measurement
     // publish
     // b. detection objector
-    std::shared_ptr<LidarDetectionFlow> lidar_detection_flow_ptr = std::make_shared<LidarDetectionFlow>(nh, cloud_topic);
+    std::shared_ptr<LidarDetectionFlow> lidar_detection_flow_ptr = std::make_shared<LidarDetectionFlow>(nh);
 
     // pre-process lidar point cloud at 100Hz:
     ros::Rate rate(100);

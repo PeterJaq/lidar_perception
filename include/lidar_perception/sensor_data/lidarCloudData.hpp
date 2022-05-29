@@ -4,7 +4,7 @@
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
 
-namespace lidar_localization {
+namespace lidar_perception {
 class CloudData {
   public:
     using POINT = pcl::PointXYZI;

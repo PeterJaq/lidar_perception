@@ -61,6 +61,7 @@ TRT::TRT(std::string modelFile, cudaStream_t stream):stream_(stream)
 
     // define config
     auto networkConfig = builder->createBuilderConfig();
+
 #if defined (__arm64__) || defined (__aarch64__) 
     networkConfig->setFlag(nvinfer1::BuilderFlag::kFP16);
     std::cout << "Enable fp16!" << std::endl;
@@ -71,7 +72,7 @@ TRT::TRT(std::string modelFile, cudaStream_t stream):stream_(stream)
     networkConfig->setMaxWorkspaceSize(size_t(1) << 30);
 
     engine_ = (builder->buildEngineWithConfig(*network, *networkConfig));
-    engine_.print();
+
     if (engine_ == nullptr)
     {
       std::cerr << ": engine init null!" << std::endl;
@@ -129,6 +130,7 @@ TRT::TRT(std::string modelFile, cudaStream_t stream):stream_(stream)
     free(data);
     trtCache.close();
   }
+  std::cout << "Loading TRT engine finished."<<std::endl;
 
   context_ = engine_->createExecutionContext();
   return;

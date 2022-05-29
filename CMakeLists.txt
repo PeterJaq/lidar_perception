@@ -6,13 +6,13 @@ SET(CMAKE_BUILD_TYPE "Release")
 SET(CMAKE_CXX_FLAGS "-std=c++14 -O3 -Wall")
 SET(CMAKE_CXX_FLAGS_RELEASE "-std=c++14 -O3 -Wall")
 
-
 find_package(catkin REQUIRED COMPONENTS
             sensor_msgs
             std_msgs
             roscpp
             rosbag
             lidar_perception_msgs
+            visualization_msgs
             tf)
 
 find_package(PCL REQUIRED)
@@ -23,7 +23,7 @@ find_package(PCL REQUIRED)
 # )
 
 set(ALL_TARGET_LIBRARIES "")
-set(TENSORRT_TARGET_LIBRARIES "libnvinfer.so libnvonnxparser.so")
+set(TENSORRT_TARGET_LIBRARIES /usr/lib/x86_64-linux-gnu/libnvinfer.so /usr/lib/x86_64-linux-gnu/libnvonnxparser.so)
 
 include(cmake/glog.cmake)
 include(cmake/YAML.cmake)
@@ -43,7 +43,7 @@ file(GLOB_RECURSE CUDA_SRCS "*.cu")
 file(GLOB_RECURSE NODE_SRCS "src/apps/*_node.cpp")
 list(REMOVE_ITEM ${ALL_SRCS} ${NODE_SRCS})
 
-add_executable(lidar_objects_detection_node src/apps/lidar_objects_detection_node.cpp ${ALL_SRCS} ${CUDA_SRCS})
+cuda_add_executable(lidar_objects_detection_node src/apps/lidar_objects_detection_node.cpp ${ALL_SRCS} ${CUDA_SRCS})
 target_link_libraries(lidar_objects_detection_node ${catkin_LIBRARIES} ${ALL_TARGET_LIBRARIES} ${TENSORRT_TARGET_LIBRARIES})
 
 install(TARGETS 

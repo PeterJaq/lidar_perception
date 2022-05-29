@@ -8,7 +8,7 @@
 
 #include <string>
 
-namespace lidar_localization {
+namespace lidar_perception{
 const std::string WORK_SPACE_PATH = "@WORK_SPACE_PATH@";
 }
 #endif

@@ -1,0 +1,6 @@
+<launch>
+    <node pkg="rviz"  type="rviz"  name="rviz"  args="-d $(find lidar_perception)/rviz/detection.rviz"></node>
+    
+    <param name="cloud_topic" type="string" value="/sensor/lidar_concat/points" />
+    <node pkg="lidar_perception"  type="lidar_objects_detection_node"  name="lidar_objects_detection"  output="screen"></node>
+</launch>

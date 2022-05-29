@@ -13,7 +13,7 @@
 
 #include "lidar_perception/sensor_data/lidarCloudData.hpp"
 
-namespace lidar_localization {
+namespace lidar_perception {
 class LidarPointCloudSubscriber {
   public:
     LidarPointCloudSubscriber(ros::NodeHandle& nh, std::string topic_name, size_t buff_size);
