@@ -7,7 +7,8 @@ LidarPointCloudSubscriber::LidarPointCloudSubscriber(ros::NodeHandle& nh, std::s
     :nh_(nh) {
     nh_.param<bool>("dump_pcd", dump_pcd, false);
     nh_.param<std::string>("dump_pcd_path", dump_pcd_path, "PCDS");
-    
+    nh_.param<double>("dump_time_diff", dump_time_diff, 1);
+
     subscriber_ = nh_.subscribe(topic_name, buff_size, &LidarPointCloudSubscriber::msg_callback, this);
 }
 
@@ -20,7 +21,10 @@ void LidarPointCloudSubscriber::msg_callback(const sensor_msgs::PointCloud2::Con
     pcl::fromROSMsg(*cloud_msg_ptr, *(cloud_data.cloud_ptr));
     // add new message to buffer:
     new_cloud_data_.push_back(cloud_data);
-    if (dump_pcd){
+    
+    double time_diff = cloud_data.time - prev_time;
+    if (dump_pcd && (time_diff > dump_time_diff)){
+        prev_time = cloud_data.time;
         dump_pclfile(cloud_data);
     }
     buff_mutex_.unlock();

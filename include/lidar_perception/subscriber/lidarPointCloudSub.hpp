@@ -31,6 +31,8 @@ class LidarPointCloudSubscriber {
 
     bool dump_pcd = false;
     std::string dump_pcd_path = "";
+    double prev_time = 0;
+    double dump_time_diff = 1;
 
     std::mutex buff_mutex_;
 };
