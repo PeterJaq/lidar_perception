@@ -4,7 +4,7 @@
     <!-- subscrible pcd topic name -->
     <param name="cloud_topic" type="string" value="/sensor/lidar_concat/points" />
     
-    <!-- save pcds -->
+    <!-- save sub pcds -->
     <param name="dump_pcd" type="bool" value="true" />
     <param name="dump_pcd_path" type="string" value="$(find lidar_perception)/PCDS" />
     <param name="dump_time_diff" type="double" value="1" />
