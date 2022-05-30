@@ -4,9 +4,9 @@
 #include <deque>
 #include <mutex>
 #include <thread>
-
 #include <ros/ros.h>
 #include <sensor_msgs/PointCloud2.h>
+#include <pcl/io/io.h>
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
 #include <pcl_conversions/pcl_conversions.h>
@@ -22,11 +22,15 @@ class LidarPointCloudSubscriber {
 
   private:
     void msg_callback(const sensor_msgs::PointCloud2::ConstPtr& cloud_msg_ptr);
+    void dump_pclfile(CloudData& cloud_data);
 
   private:
     ros::NodeHandle nh_;
     ros::Subscriber subscriber_;
     std::deque<CloudData> new_cloud_data_;
+
+    bool dump_pcd = false;
+    std::string dump_pcd_path = "";
 
     std::mutex buff_mutex_;
 };
