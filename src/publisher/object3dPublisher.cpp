@@ -26,9 +26,9 @@ namespace lidar_perception {
 
     void Object3DPublisher::PublishData(LidarObjects3DData& objects3d_ptr_output, ros::Time time){
         lidar_perception_msgs::BoundingBoxes3DPtr objects3d_msg_ptr_output(new lidar_perception_msgs::BoundingBoxes3D());
-        for (auto object3d : objects3d_ptr_output.objects3d_ptr->objects3d){
-            std::cout << object3d.x << " " << object3d.y << " " << object3d.z;
-        }
+        // for (auto object3d : objects3d_ptr_output.objects3d_ptr->objects3d){
+        //     std::cout << object3d.x << " " << object3d.y << " " << object3d.z << std::endl;
+        // }
 
         objects3d_msg_ptr_output->header.stamp = time;
         objects3d_msg_ptr_output->header.frame_id = frame_id_;

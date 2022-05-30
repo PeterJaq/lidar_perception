@@ -26,8 +26,8 @@ class Params
     const float max_x_range = 69.12;
     const float min_y_range = -39.68;
     const float max_y_range = 39.68;
-    const float min_z_range = -3.0;
-    const float max_z_range = 1.0;
+    const float min_z_range = -1.0;
+    const float max_z_range = 4.0;
     // the size of a pillar
     const float pillar_x_size = 0.16;
     const float pillar_y_size = 0.16;

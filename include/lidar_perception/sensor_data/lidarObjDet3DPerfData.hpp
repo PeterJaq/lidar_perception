@@ -18,7 +18,7 @@ class LidarObjDet3DPerfData {
   public:
     // using POINT = pcl::PointXYZI;'
 
-    double time = 0.0;
+    double timecost = 0.0;
     // std::vector<Object3D> objects3d;
     // using OBJECT = object;
     // using OBJECTS = std::vector<OBJECT>;

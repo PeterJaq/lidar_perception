@@ -2,6 +2,8 @@
 #define LIDAR_PERCEPTION_PUBLISHER_OBJECT3DVISPUBLISHER_HPP_
 
 #include <ros/ros.h>
+#include <Eigen/Geometry>
+#include <Eigen/Dense>
 #include <visualization_msgs/Marker.h>
 #include <visualization_msgs/MarkerArray.h>
 #include "lidar_perception/sensor_data/lidarObjects3DData.hpp"
@@ -15,7 +17,7 @@ namespace lidar_perception {
                             size_t buff_size);
             Object3DVisPublisher() = default;
 
-        private:
+        public:
             void Publish(LidarObjects3DData& objects3d_ptr_output, double time);
             void Publish(LidarObjects3DData& objects3d_ptr_output);
 
@@ -23,6 +25,7 @@ namespace lidar_perception {
 
         private:
             void PublishData(LidarObjects3DData& objects3d_ptr_output, ros::Time time);
+            Eigen::Quaternionf Euler2Quaternion(float yaw, float pitch, float row);
         private:
             ros::NodeHandle nh_;
             ros::Publisher publisher_;

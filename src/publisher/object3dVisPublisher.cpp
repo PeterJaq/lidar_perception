@@ -23,17 +23,62 @@ namespace lidar_perception {
 
     void Object3DVisPublisher::PublishData(LidarObjects3DData& objects3d_ptr_output, ros::Time time){
         lidar_perception_msgs::BoundingBoxes3DPtr objects3d_msg_ptr_output(new lidar_perception_msgs::BoundingBoxes3D());
+        
+        visualization_msgs::MarkerArrayPtr marker_array_ptr (new visualization_msgs::MarkerArray());
         for (auto object3d : objects3d_ptr_output.objects3d_ptr->objects3d){
-            std::cout << object3d.x << " " << object3d.y << " " << object3d.z;
+            std::cout << "pose: " << object3d.x << " " << object3d.y << " " << object3d.z << std::endl;
+            std::cout << "scale: " << object3d.w << " " << object3d.h << " " << object3d.l << std::endl;
+            std::cout << "cls: " <<object3d.cls << std::endl;
+            visualization_msgs::MarkerPtr bbox_marker_ptr (new visualization_msgs::Marker());
+            bbox_marker_ptr->header.frame_id = "odom";
+            bbox_marker_ptr->header.stamp = ros::Time::now();
+            bbox_marker_ptr->ns = "";
+            
+            bbox_marker_ptr->type = visualization_msgs::Marker::CUBE;
+            // color
+            bbox_marker_ptr->color.r = 1.0f;
+            bbox_marker_ptr->color.g = 0.0f;
+            bbox_marker_ptr->color.b = 0.0f;
+            bbox_marker_ptr->color.a = 0.2f;
+
+            // pose
+            bbox_marker_ptr->pose.position.x = object3d.x;
+            bbox_marker_ptr->pose.position.y = object3d.y;
+            bbox_marker_ptr->pose.position.z = object3d.z;
+
+            // orientation
+            Eigen::Quaternionf quaternion;
+            quaternion = Euler2Quaternion(object3d.yaw, object3d.pitch, object3d.roll);
+            bbox_marker_ptr->pose.orientation.x = quaternion.x();
+            bbox_marker_ptr->pose.orientation.y = quaternion.y();
+            bbox_marker_ptr->pose.orientation.z = quaternion.z();
+            bbox_marker_ptr->pose.orientation.w = quaternion.w();
+
+            // whl
+            bbox_marker_ptr->scale.x = object3d.w;
+            bbox_marker_ptr->scale.y = object3d.l;
+            bbox_marker_ptr->scale.z = object3d.h;
+
+            marker_array_ptr->markers.emplace_back(*bbox_marker_ptr);
         }
 
-        objects3d_msg_ptr_output->header.stamp = time;
-        objects3d_msg_ptr_output->header.frame_id = frame_id_;
-        publisher_.publish(*objects3d_msg_ptr_output);
+        publisher_.publish(*marker_array_ptr);
     }
 
 
     bool Object3DVisPublisher::HasSubscribers(){
         return publisher_.getNumSubscribers() != 0;
     }
+    
+    Eigen::Quaternionf Object3DVisPublisher::Euler2Quaternion(float yaw, float pitch, float roll){
+        Eigen::Matrix3f matYaw(3, 3), matRoll(3, 3), matPitch(3, 3), matRotation(3, 3);
+        Eigen::Quaternionf q;
+        q = Eigen::AngleAxisf(roll, Eigen::Vector3f::UnitX())
+            * Eigen::AngleAxisf(pitch, Eigen::Vector3f::UnitY())
+            * Eigen::AngleAxisf(yaw, Eigen::Vector3f::UnitZ());
+
+        return q;
+        }
+
+
 }

@@ -113,6 +113,10 @@ namespace lidar_perception{
 
     bool LidarDetectionFlow::PublishResults(){
         object_3d_pub_ptr_->Publish(objects_3d_, current_cloud_data_.time);
+        if(is_vis){
+            object_3d_vis_pub_ptr_->Publish(objects_3d_, current_cloud_data_.time);
+        }
+
         return true;
     }
 
@@ -129,7 +133,7 @@ namespace lidar_perception{
             obj3d.l = nms_pred.at(i).l; 
             obj3d.yaw = nms_pred.at(i).rt;
             obj3d.pitch = 0;
-            obj3d.row = 0;
+            obj3d.roll = 0;
             obj3d.probability = nms_pred.at(i).score;
             obj3d.cls = nms_pred.at(i).id;
             objects_3d_.objects3d_ptr->objects3d.emplace_back(obj3d);

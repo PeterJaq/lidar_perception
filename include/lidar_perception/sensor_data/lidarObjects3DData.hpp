@@ -20,7 +20,7 @@ struct Object3D
 
         double yaw = 0.0;
         double pitch = 0.0;
-        double row = 0.0;
+        double roll = 0.0;
 
         int id = 0.0;
         int cls = 0.0;
