@@ -9,9 +9,9 @@ now support:
 - [x] LIDAR Ground Segmentation: [Fast lidar ground segmentation](https://ieeexplore.ieee.org/document/7989591) 
 
 coming soon:
-- [] LIDAR Tracking 
-- [] LIDAR Detection support mmdetection3d/openpcdet 
-- [] LIDAR Ground to gridmap 
+- [ ] LIDAR Tracking 
+- [ ] LIDAR Detection support mmdetection3d/openpcdet 
+- [ ] LIDAR Ground to gridmap 
 
 
 ## how to use 
