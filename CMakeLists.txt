@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 2.8.3)
 project(lidar_perception)
 
 set(CMAKE_CXX_STANDARD 14)
-SET(CMAKE_BUILD_TYPE "Release")
+SET(CMAKE_BUILD_TYPE "Debug") 
+# SET(CMAKE_BUILD_TYPE "Release")
 SET(CMAKE_CXX_FLAGS "-std=c++14 -O3 -Wall")
 SET(CMAKE_CXX_FLAGS_RELEASE "-std=c++14 -O3 -Wall")
 
@@ -41,13 +42,17 @@ catkin_package()
 file(GLOB_RECURSE ALL_SRCS "*.cpp")
 file(GLOB_RECURSE CUDA_SRCS "*.cu")
 file(GLOB_RECURSE NODE_SRCS "src/apps/*_node.cpp")
-list(REMOVE_ITEM ${ALL_SRCS} ${NODE_SRCS})
+list(REMOVE_ITEM ALL_SRCS ${NODE_SRCS})
 
 cuda_add_executable(lidar_objects_detection_node src/apps/lidar_objects_detection_node.cpp ${ALL_SRCS} ${CUDA_SRCS})
 target_link_libraries(lidar_objects_detection_node ${catkin_LIBRARIES} ${ALL_TARGET_LIBRARIES} ${TENSORRT_TARGET_LIBRARIES})
 
+cuda_add_executable(lidar_ground_filter_node src/apps/lidar_ground_filter_node.cpp ${ALL_SRCS} ${CUDA_SRCS})
+target_link_libraries(lidar_ground_filter_node ${catkin_LIBRARIES} ${ALL_TARGET_LIBRARIES} ${TENSORRT_TARGET_LIBRARIES})
+
 install(TARGETS 
     lidar_objects_detection_node
+    lidar_ground_filter_node
     RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
