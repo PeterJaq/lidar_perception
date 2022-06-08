@@ -53,9 +53,14 @@ namespace lidar_perception{
         // data
             CloudData current_cloud_data_;
 
+        // performance
+            std::vector<float> perf_data;
+            
         // param
             bool is_vis = false;
             bool is_performance = false;
+
+            std::string model_file = "";
 
             std::string lidar_sub_topic = "";
             std::string vis_obstacles_topic = "";

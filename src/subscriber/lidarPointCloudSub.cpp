@@ -14,7 +14,6 @@ LidarPointCloudSubscriber::LidarPointCloudSubscriber(ros::NodeHandle& nh, std::s
 
 void LidarPointCloudSubscriber::msg_callback(const sensor_msgs::PointCloud2::ConstPtr& cloud_msg_ptr) {
     buff_mutex_.lock();
-    ROS_ERROR("Run Pointcloud msg cbk!");
     // convert ROS PointCloud2 to pcl::PointCloud<pcl::PointXYZ>:
     CloudData cloud_data;
     cloud_data.time = cloud_msg_ptr->header.stamp.toSec();

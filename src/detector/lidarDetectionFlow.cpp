@@ -13,6 +13,8 @@ namespace lidar_perception{
         nh.param<bool>("is_performance", is_performance, false);
         nh.param<std::string>("performance_topic", performance_topic, "/performance/info/pointpillars");
 
+        nh.param<std::string>("detector_model_path", model_file, "");
+
         // subscriber
         lidar_point_cloud_sub_ptr_ = std::make_shared<LidarPointCloudSubscriber>(nh, lidar_sub_topic, 100000);
 
@@ -28,7 +30,7 @@ namespace lidar_perception{
         }
 
         // model
-        std::string model_file = "/home/pc/workspace/ws_lidar_perception/src/lidar_perception/onnxs/pointpillar.onnx";
+        // std::string model_file = "";
         cudaStream_t stream = NULL;
         checkCudaErrors(cudaStreamCreate(&stream));
         pointpillar_detector_ptr_ = std::make_shared<PointPillar>(model_file, stream);
@@ -90,10 +92,12 @@ namespace lidar_perception{
         size_t points_size = current_cloud_data_.cloud_ptr->size();
 
         for (auto point: current_cloud_data_.cloud_ptr->points){
-            pointcloud_tmp.emplace_back(point.x);
-            pointcloud_tmp.emplace_back(point.y);                
-            pointcloud_tmp.emplace_back(point.z);
-            pointcloud_tmp.emplace_back(point.intensity);
+            if(!std::isnan(point.x)){
+                pointcloud_tmp.emplace_back(point.x);
+                pointcloud_tmp.emplace_back(point.y);                
+                pointcloud_tmp.emplace_back(point.z);
+                pointcloud_tmp.emplace_back(point.intensity/256.0);
+            }
         }
         float* points = &pointcloud_tmp[0];
         float *points_data = nullptr;
@@ -102,7 +106,7 @@ namespace lidar_perception{
         checkCudaErrors(cudaMemcpy(points_data, points, points_data_size, cudaMemcpyDefault));
         checkCudaErrors(cudaDeviceSynchronize());
         
-        pointpillar_detector_ptr_->doinfer(points_data, points_size, nms_pred);
+        pointpillar_detector_ptr_->doinfer(points_data, points_size, nms_pred, is_performance, perf_data);
         
         Pred2Objects();
     
@@ -112,7 +116,6 @@ namespace lidar_perception{
     }
 
     bool LidarDetectionFlow::PublishResults(){
-        object_3d_pub_ptr_->Publish(objects_3d_, current_cloud_data_.time);
         if(is_vis){
             object_3d_vis_pub_ptr_->Publish(objects_3d_, current_cloud_data_.time);
         }

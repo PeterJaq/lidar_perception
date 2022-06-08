@@ -26,9 +26,9 @@ namespace lidar_perception {
         
         visualization_msgs::MarkerArrayPtr marker_array_ptr (new visualization_msgs::MarkerArray());
         for (auto object3d : objects3d_ptr_output.objects3d_ptr->objects3d){
-            std::cout << "pose: " << object3d.x << " " << object3d.y << " " << object3d.z << std::endl;
-            std::cout << "scale: " << object3d.w << " " << object3d.h << " " << object3d.l << std::endl;
-            std::cout << "cls: " <<object3d.cls << std::endl;
+            // std::cout << "pose: " << object3d.x << " " << object3d.y << " " << object3d.z << std::endl;
+            // std::cout << "scale: " << object3d.w << " " << object3d.h << " " << object3d.l << std::endl;
+            // std::cout << "cls: " <<object3d.cls << std::endl;
             visualization_msgs::MarkerPtr bbox_marker_ptr (new visualization_msgs::Marker());
             bbox_marker_ptr->header.frame_id = "odom";
             bbox_marker_ptr->header.stamp = ros::Time::now();
@@ -78,7 +78,7 @@ namespace lidar_perception {
             * Eigen::AngleAxisf(yaw, Eigen::Vector3f::UnitZ());
 
         return q;
-        }
+    }
 
 
 }

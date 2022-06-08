@@ -100,6 +100,12 @@ class PointPillar {
   public:
     PointPillar(std::string modelFile, cudaStream_t stream = 0);
     ~PointPillar(void);
-    int doinfer(void*points, unsigned int point_size, std::vector<Bndbox> &res);
+    // int doinfer(void*points, unsigned int point_size, std::vector<Bndbox> &res);
+    int doinfer(void*points, \
+              unsigned int point_size, \
+              std::vector<Bndbox> &res, \
+              bool is_performance, \
+              std::vector<float>& perf_cost);
+
 };
 

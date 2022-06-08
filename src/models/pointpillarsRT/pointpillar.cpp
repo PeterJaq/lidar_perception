@@ -220,8 +220,14 @@ PointPillar::~PointPillar(void)
   return;
 }
 
-int PointPillar::doinfer(void*points_data, unsigned int points_size, std::vector<Bndbox> &nms_pred)
+int PointPillar::doinfer(void*points_data, unsigned int points_size, std::vector<Bndbox> &nms_pred, \
+                        const bool is_performance, std::vector<float>& perf_cost)
 {
+if(!is_performance){
+  #undef PERFORMANCE_LOG
+  #define PERFORMANCE_LOG 0
+}
+
 #if PERFORMANCE_LOG
   float generateVoxelsTime = 0.0f;
   checkCudaErrors(cudaEventRecord(start_, stream_));
@@ -305,10 +311,11 @@ int PointPillar::doinfer(void*points_data, unsigned int points_size, std::vector
   checkCudaErrors(cudaEventRecord(stop_, stream_));
   checkCudaErrors(cudaEventSynchronize(stop_));
   checkCudaErrors(cudaEventElapsedTime(&doPostprocessCudaTime, start_, stop_));
-  std::cout<<"TIME: generateVoxels: "<< generateVoxelsTime <<" ms." <<std::endl;
-  std::cout<<"TIME: generateFeatures: "<< generateFeaturesTime <<" ms." <<std::endl;
+  // std::cout<<"TIME: generateVoxels: "<< generateVoxelsTime <<" ms." <<std::endl;
+  // std::cout<<"TIME: generateFeatures: "<< generateFeaturesTime <<" ms." <<std::endl;
   std::cout<<"TIME: doinfer: "<< doinferTime <<" ms." <<std::endl;
-  std::cout<<"TIME: doPostprocessCuda: "<< doPostprocessCudaTime <<" ms." <<std::endl;
+  // std::cout<<"TIME: doPostprocessCuda: "<< doPostprocessCudaTime <<" ms." <<std::endl;
 #endif
   return 0;
 }
+
