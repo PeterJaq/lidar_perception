@@ -5,13 +5,13 @@ This is a project dedicated to solving the LIDAR perception in the field of auto
 Also now it is based on 
 
 now support:
-[x] LIDAR Detection: pointpillar (onnx) fork from [Nvidia Cuda Pointpillars](https://github.com/NVIDIA-AI-IOT/CUDA-PointPillars)
-[x] LIDAR Ground Segmentation: [Fast lidar ground segmentation](https://ieeexplore.ieee.org/document/7989591) 
+- [x] LIDAR Detection: pointpillar (onnx) fork from [Nvidia Cuda Pointpillars](https://github.com/NVIDIA-AI-IOT/CUDA-PointPillars)
+- [x] LIDAR Ground Segmentation: [Fast lidar ground segmentation](https://ieeexplore.ieee.org/document/7989591) 
 
 coming soon:
-[] LIDAR Tracking 
-[] LIDAR Detection support mmdetection3d/openpcdet 
-[] LIDAR Ground to gridmap 
+- [] LIDAR Tracking 
+- [] LIDAR Detection support mmdetection3d/openpcdet 
+- [] LIDAR Ground to gridmap 
 
 
 ## how to use 
@@ -35,7 +35,7 @@ Explanation of this launch file
     <param name="dump_time_diff" type="double" value="5" />
 
     <param name="is_performance" type="bool" value="true" />
-    
+
     <param name="detector_model_path" type="string" value="$(find lidar_perception)/onnxs/pointpillar.onnx" />
 
     <!-- visulization -->
