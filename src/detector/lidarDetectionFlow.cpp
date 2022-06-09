@@ -5,7 +5,7 @@
 
 namespace lidar_perception{
     LidarDetectionFlow::LidarDetectionFlow(ros::NodeHandle& nh){
-        nh.param<std::string>("cloud_topic", lidar_sub_topic, "/synced_cloud");
+        nh.param<std::string>("detector_cloud_topic", lidar_sub_topic, "/synced_cloud");
 
         nh.param<bool>("is_vis", is_vis, false);
         nh.param<std::string>("vis_obstacles_topic", vis_obstacles_topic, "/vis/obstacles");

@@ -22,15 +22,15 @@ class Params
   public:
     static const int num_classes = 3;
     const char *class_name [num_classes] = { "Car","Pedestrian","Cyclist",};
-    const float min_x_range = -50.00;
-    const float max_x_range = 50.00;
-    const float min_y_range = -40.00;
-    const float max_y_range = 40.00;
-    const float min_z_range = -0.5;
-    const float max_z_range = 4.0;
+    const float min_x_range = 0.0;
+    const float max_x_range = 69.12;
+    const float min_y_range = -39.68;
+    const float max_y_range = 39.68;
+    const float min_z_range = -3.0;
+    const float max_z_range = 1.0;
     // the size of a pillar
-    const float pillar_x_size = 0.2;
-    const float pillar_y_size = 0.2;
+    const float pillar_x_size = 0.16;
+    const float pillar_y_size = 0.16;
     const float pillar_z_size = 4.0;
     const int max_num_points_per_pillar = 32;
     const int num_point_values = 4;
@@ -51,10 +51,10 @@ class Params
       1.76,0.6,1.73,0.0,
       1.76,0.6,1.73,1.57,
       };
-    const float anchor_bottom_heights[num_classes] = {-1,-0.66,-0.33,};
+    const float anchor_bottom_heights[num_classes] = {-1.8,-0.6,-0.6,};
     // the score threshold for classification
-    const float score_thresh = 0.55;
-    const float nms_thresh = 0.55;
+    const float score_thresh = 0.4;
+    const float nms_thresh = 0.4;
     const int max_num_pillars = MAX_VOXELS;
     const int pillarPoints_bev = max_num_points_per_pillar * max_num_pillars;
     // the detected boxes result decode by (x, y, z, w, l, h, yaw)

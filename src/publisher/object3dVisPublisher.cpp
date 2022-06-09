@@ -25,21 +25,21 @@ namespace lidar_perception {
         lidar_perception_msgs::BoundingBoxes3DPtr objects3d_msg_ptr_output(new lidar_perception_msgs::BoundingBoxes3D());
         
         visualization_msgs::MarkerArrayPtr marker_array_ptr (new visualization_msgs::MarkerArray());
+        int objId = 0;
         for (auto object3d : objects3d_ptr_output.objects3d_ptr->objects3d){
-            // std::cout << "pose: " << object3d.x << " " << object3d.y << " " << object3d.z << std::endl;
-            // std::cout << "scale: " << object3d.w << " " << object3d.h << " " << object3d.l << std::endl;
-            // std::cout << "cls: " <<object3d.cls << std::endl;
+
             visualization_msgs::MarkerPtr bbox_marker_ptr (new visualization_msgs::Marker());
             bbox_marker_ptr->header.frame_id = "odom";
             bbox_marker_ptr->header.stamp = ros::Time::now();
+            bbox_marker_ptr->lifetime = ros::Duration();
             bbox_marker_ptr->ns = "";
-            
+            bbox_marker_ptr->id = objId;
             bbox_marker_ptr->type = visualization_msgs::Marker::CUBE;
             // color
-            bbox_marker_ptr->color.r = 1.0f;
-            bbox_marker_ptr->color.g = 0.0f;
-            bbox_marker_ptr->color.b = 0.0f;
-            bbox_marker_ptr->color.a = 0.2f;
+            bbox_marker_ptr->color.r = 0.0f;
+            bbox_marker_ptr->color.g = 1.0f;
+            bbox_marker_ptr->color.b = 1.0f;
+            bbox_marker_ptr->color.a = 0.5f;
 
             // pose
             bbox_marker_ptr->pose.position.x = object3d.x;
@@ -60,8 +60,9 @@ namespace lidar_perception {
             bbox_marker_ptr->scale.z = object3d.h;
 
             marker_array_ptr->markers.emplace_back(*bbox_marker_ptr);
-        }
 
+            objId += 1;
+        }
         publisher_.publish(*marker_array_ptr);
     }
 
