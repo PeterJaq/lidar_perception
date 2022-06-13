@@ -5,7 +5,7 @@
 
 namespace lidar_perception{
     LidarDetectionFlow::LidarDetectionFlow(ros::NodeHandle& nh){
-        nh.param<std::string>("detector_cloud_topic", lidar_sub_topic, "/synced_cloud");
+        nh.param<std::string>("cloud_topic", lidar_sub_topic, "/synced_cloud");
 
         nh.param<bool>("is_vis", is_vis, false);
         nh.param<std::string>("vis_obstacles_topic", vis_obstacles_topic, "/vis/obstacles");
@@ -87,8 +87,8 @@ namespace lidar_perception{
     }
 
     bool LidarDetectionFlow::Infer(){
-
         std::vector<float> pointcloud_tmp;
+        std::cout << "Run Infer" << std::endl;
         size_t points_size = current_cloud_data_.cloud_ptr->size();
 
         for (auto point: current_cloud_data_.cloud_ptr->points){
@@ -96,7 +96,7 @@ namespace lidar_perception{
                 pointcloud_tmp.emplace_back(point.x);
                 pointcloud_tmp.emplace_back(point.y);                
                 pointcloud_tmp.emplace_back(point.z);
-                pointcloud_tmp.emplace_back(point.intensity/256.0);
+                pointcloud_tmp.emplace_back(point.intensity/255);
             }
         }
         float* points = &pointcloud_tmp[0];
@@ -109,7 +109,7 @@ namespace lidar_perception{
         pointpillar_detector_ptr_->doinfer(points_data, points_size, nms_pred, is_performance, perf_data);
         
         Pred2Objects();
-    
+        std::cout << nms_pred.size() << std::endl;
         nms_pred.clear();
 
         return true;

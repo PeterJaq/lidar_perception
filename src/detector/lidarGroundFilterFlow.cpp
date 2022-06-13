@@ -6,7 +6,7 @@
 
 namespace lidar_perception{
     LidarGroundFilterFlow::LidarGroundFilterFlow(ros::NodeHandle& nh){
-        nh.param<std::string>("segmentation_cloud_topic", lidar_sub_topic, "/synced_cloud");
+        nh.param<std::string>("cloud_topic", lidar_sub_topic, "/synced_cloud");
         nh.param<std::string>("ground_cloud_topic", ground_pointcloud_topic, "/synced_cloud");
         nh.param<std::string>("filted_cloud_topic", filtered_pointcloud_topic, "/synced_cloud");
 

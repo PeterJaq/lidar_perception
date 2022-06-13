@@ -8,7 +8,7 @@ GroundPlaneFit::GroundPlaneFit() {
     th_seeds_ = 1.2; // Threshold for points to be considered initial seeds
     th_dist_ = 0.1; // Threshold distance from the plane
 
-    sensor_height_ = 1.8; // LiDAR sensor height to ground
+    sensor_height_ = 1.9; // LiDAR sensor height to ground
 }
 
 GroundPlaneFit::~GroundPlaneFit() {}
