@@ -119,6 +119,7 @@ namespace lidar_perception{
         if(is_vis){
             object_3d_vis_pub_ptr_->Publish(objects_3d_, current_cloud_data_.time);
         }
+        object_3d_pub_ptr_->Publish(objects_3d_, current_cloud_data_.time);
 
         return true;
     }

@@ -26,9 +26,24 @@ namespace lidar_perception {
 
     void Object3DPublisher::PublishData(LidarObjects3DData& objects3d_ptr_output, ros::Time time){
         lidar_perception_msgs::BoundingBoxes3DPtr objects3d_msg_ptr_output(new lidar_perception_msgs::BoundingBoxes3D());
-        // for (auto object3d : objects3d_ptr_output.objects3d_ptr->objects3d){
-        //     std::cout << object3d.x << " " << object3d.y << " " << object3d.z << std::endl;
-        // }
+        lidar_perception_msgs::BoundingBox3DPtr object3d_msg_ptr_output(new lidar_perception_msgs::BoundingBox3D());
+        for (auto object3d : objects3d_ptr_output.objects3d_ptr->objects3d){
+            object3d_msg_ptr_output->x = object3d.x;
+            object3d_msg_ptr_output->y = object3d.y;
+            object3d_msg_ptr_output->z = object3d.z;
+            object3d_msg_ptr_output->w = object3d.w;
+            object3d_msg_ptr_output->h = object3d.h;
+            object3d_msg_ptr_output->l = object3d.l;
+            object3d_msg_ptr_output->yaw = object3d.yaw;
+            object3d_msg_ptr_output->pitch = object3d.pitch;
+            object3d_msg_ptr_output->roll = object3d.roll;
+            object3d_msg_ptr_output->id = object3d.id;
+            object3d_msg_ptr_output->cls = object3d.cls;
+
+            objects3d_msg_ptr_output->bounding_boxes3d.emplace_back(*object3d_msg_ptr_output);
+            objects3d_msg_ptr_output->object_count.count += 1;
+        }
+        
 
         objects3d_msg_ptr_output->header.stamp = time;
         objects3d_msg_ptr_output->header.frame_id = frame_id_;
