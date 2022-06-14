@@ -55,3 +55,6 @@ Explanation of this launch file
     <node pkg="rosbag" type="play" name="rosbag" args="/home/pc/data/sample/20220525_outside_samples_lidar_concated_2022-05-29-14-59-20.bag"/>
 </launch>
 ```
+## reference  
+
+* https://github.com/NVIDIA-AI-IOT/CUDA-PointPillars
